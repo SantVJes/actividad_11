@@ -162,7 +162,11 @@ fun Body_Eliminar(appContainer: AppContainer) {
 
     // Búsqueda del producto por código
     val busqueda by remember(userInput) {
-        viewModel.getProductoByCodigo(userInput.toIntOrNull() ?: 0)
+        if (userInput.all { it.isDigit() }){
+            viewModel.getProductoByCodigo(userInput.toIntOrNull() ?: 0)
+        }else{
+            viewModel.getProductoBydescripcion(userInput)
+        }
     }.collectAsState(initial = null)
 
     // Si la búsqueda tiene un resultado, lo seleccionamos automáticamente
@@ -175,7 +179,7 @@ fun Body_Eliminar(appContainer: AppContainer) {
         TextField(
             value = userInput,
             onValueChange = { input -> userInput = input },
-            label = { Text("Buscar producto a eliminar por Código") },
+            label = { Text("Buscar producto por Código o Descripcion ") },
             modifier = Modifier.fillMaxWidth(),
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Buscar") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)

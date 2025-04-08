@@ -28,6 +28,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
@@ -42,6 +43,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -51,13 +53,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
-import androidx.compose.ui.draw.scale
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.actividad_11.Database.AppContainer
-import com.example.actividad_11.Database.Productos
 import com.example.actividad_11.navegacion.Directorio
 import com.example.actividad_11.navegacion.NavigationDrawerContent
 import com.example.actividad_11.ui.theme.ProductosViewModel
@@ -136,6 +134,7 @@ fun Modificar_Buscar(navController: NavHostController, appContainer: AppContaine
                 Body_Buscar( appContainer)
             }
         }
+
     }
 
 
@@ -183,8 +182,8 @@ fun Body_Buscar( appContainer: AppContainer) {
 
 
     val busqueda by remember(userInput, checkedState.value) {
-        if (!checkedState.value) {
-            seleccion = "codijo";
+        if (userInput.all { it.isDigit() }) {
+            seleccion = "codigo";
             viewModel.getProductoByCodigo(userInput.toIntOrNull() ?: 0)
         } else {
             seleccion = "descripcion";
@@ -207,6 +206,20 @@ fun Body_Buscar( appContainer: AppContainer) {
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Buscar") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         Spacer(modifier = Modifier.height(16.dp))
 
